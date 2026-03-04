@@ -593,6 +593,11 @@ mod4_linp = nlme(yield_mgha ~ SSlinp(sr_ksha, a, b, xs),
 
 # Summary
 summary(mod4_linp)
+
+# a = intercept of the linear part
+# b = slope of the linear part
+# xs = breakpoint (x-value where the plateau starts)
+# sr_ksha = your predictor variable (numeric vector)
 ```
 
 ## b) Model Assumptions
@@ -633,7 +638,8 @@ Looking good.
 On this plot, looking for normality.
 
 ```{r mod4 QQ plot for Rep random effect}
-mod4_linp_randeff 
+mod4_linp_randeff = ranef(mod4_linp) %>%
+  as.data.frame()
 
 ggplot(mod4_linp_randeff, 
        aes(sample = estimate))+
@@ -783,20 +789,19 @@ ggplot(reg_dfw, aes(x = sr_ksha, y = yield_mgha))+
   geom_segment( x = 73.48,
                 xend = 73.48,
                 y = 0,
-                yend = 13.45) + 
+                yend = 13.45) +
     geom_segment( x = 0,
                 xend = 73.48,
                 y = 13.45,
-                yend = 0)
+                yend = 13.45)
 
 ```
 # 9) Take-home  
 
--   We use regression when both y and x are **numerical**  
+-   We use regression when both y and x are **numerical**
 
 -   Finding optimum: should run multiple models, see which one fits the data best, and choose that one to estimate optimum
 
 -   Always check residuals! p-values alone do not tell you whether model is adequate for your data!
 
 # Quiz
-
